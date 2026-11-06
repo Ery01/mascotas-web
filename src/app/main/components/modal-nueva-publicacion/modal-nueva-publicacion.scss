@@ -1,0 +1,28 @@
+.modal-header-mc {
+  background-color: var(--mc-verde);
+  color: #fff;
+  padding: 1rem 1.5rem;
+}
+
+.contenido {
+  // mat-dialog-content agrega su propio scroll cuando el formulario es largo
+  padding-top: 1rem !important;
+  color: var(--bs-body-color);
+}
+
+.seccion {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0.5rem 0 1rem;
+}
+
+.vista-previa {
+  max-height: 180px;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.acciones {
+  padding: 0.75rem 1.5rem 1rem !important;
+  border-top: 1px solid #dee2e6;
+}

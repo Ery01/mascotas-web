@@ -1,0 +1,76 @@
+// Tema de Angular Material (lo agrega "ng add @angular/material").
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$green-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+// Colores de la aplicación (verde institucional de las maquetas)
+:root {
+  --mc-verde: #198754;
+  --mc-verde-oscuro: #146c43;
+  --mc-fondo: #f4f6f9;
+}
+
+body {
+  color-scheme: light;
+  margin: 0;
+  height: 100%;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  background-color: var(--mc-fondo);
+}
+
+// Íconos de Google (Material Symbols): <span class="material-symbols-outlined">favorite</span>
+.material-symbols-outlined {
+  font-size: 1.25rem;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+// Botón principal verde
+.btn-mc {
+  background-color: var(--mc-verde);
+  border-color: var(--mc-verde);
+  color: #fff;
+
+  &:hover,
+  &:focus {
+    background-color: var(--mc-verde-oscuro);
+    border-color: var(--mc-verde-oscuro);
+    color: #fff;
+  }
+}
+
+.card-mc {
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+// Diálogos de Angular Material sin padding extra (el contenido usa Bootstrap)
+.dialog-mc .mat-mdc-dialog-surface {
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+// Los diálogos y avisos de Material usan la misma tipografía que el resto
+.mat-mdc-dialog-container,
+.mat-mdc-snack-bar-container {
+  --mat-dialog-supporting-text-font: Roboto, 'Helvetica Neue', sans-serif;
+  --mat-snack-bar-supporting-text-font: Roboto, 'Helvetica Neue', sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.mat-mdc-snack-bar-container .mat-mdc-button {
+  font-family: inherit;
+}

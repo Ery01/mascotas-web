@@ -1,0 +1,10 @@
+<div class="p-3 p-md-4">
+  <h5 class="mb-2">{{ data.titulo }}</h5>
+  <p class="text-secondary mb-4">{{ data.texto }}</p>
+  <div class="d-flex justify-content-end gap-2">
+    <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+    <button type="button" class="btn" [class]="data.claseBoton || 'btn-mc'" (click)="aceptar()">
+      {{ data.textoAceptar || 'Aceptar' }}
+    </button>
+  </div>
+</div>

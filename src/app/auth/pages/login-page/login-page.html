@@ -1,0 +1,62 @@
+<div class="login-fondo">
+  <div class="card card-mc login-card p-4 p-md-5">
+    <div class="text-center mb-4">
+      <div class="login-logo mx-auto mb-3">
+        <span class="material-symbols-outlined">favorite</span>
+      </div>
+      <h1 class="h3 fw-bold mb-1">Mascotas Córdoba</h1>
+      <p class="text-secondary mb-0">Programa Municipal de Bienestar Animal</p>
+    </div>
+
+    @if (expirada()) {
+      <div class="alert alert-warning py-2 small">Su sesión expiró. Vuelva a iniciar sesión.</div>
+    }
+    @if (sinPermiso()) {
+      <div class="alert alert-warning py-2 small">Su perfil no tiene acceso a la gestión de publicaciones.</div>
+    }
+    @if (error()) {
+      <div class="alert alert-danger py-2 small" role="alert">{{ error() }}</div>
+    }
+
+    <form [formRoot]="loginForm" novalidate>
+      <div class="mb-3">
+        <label for="icuil" class="form-label">CUIL</label>
+        <div class="input-group">
+          <span class="input-group-text"><span class="material-symbols-outlined">person</span></span>
+          <input appAutofocus type="text" id="icuil" class="form-control" inputmode="numeric"
+            placeholder="Ingrese su CUIL" autocomplete="username" [formField]="loginForm.cuil"
+            [class.is-invalid]="loginForm.cuil().touched() && loginForm.cuil().invalid()" />
+        </div>
+        @if (loginForm.cuil().touched() && loginForm.cuil().invalid()) {
+          <small class="text-danger">{{ loginForm.cuil().errors()[0]?.message }}</small>
+        }
+      </div>
+
+      <div class="mb-4">
+        <label for="iclave" class="form-label">Contraseña</label>
+        <div class="input-group">
+          <span class="input-group-text"><span class="material-symbols-outlined">lock</span></span>
+          <input [type]="mostrarClave() ? 'text' : 'password'" id="iclave" class="form-control"
+            placeholder="Ingrese su contraseña" autocomplete="current-password" [formField]="loginForm.clave"
+            [class.is-invalid]="loginForm.clave().touched() && loginForm.clave().invalid()" />
+          <button type="button" class="btn btn-outline-secondary" (click)="mostrarClave.set(!mostrarClave())"
+            [attr.aria-label]="mostrarClave() ? 'Ocultar contraseña' : 'Mostrar contraseña'">
+            <span class="material-symbols-outlined">{{ mostrarClave() ? 'visibility_off' : 'visibility' }}</span>
+          </button>
+        </div>
+        @if (loginForm.clave().touched() && loginForm.clave().invalid()) {
+          <small class="text-danger">{{ loginForm.clave().errors()[0]?.message }}</small>
+        }
+      </div>
+
+      <button type="submit" class="btn btn-mc btn-lg w-100 d-flex align-items-center justify-content-center gap-2"
+        [disabled]="loginForm().submitting()">
+        <span class="material-symbols-outlined">login</span> Iniciar sesión
+      </button>
+    </form>
+
+    <p class="text-center text-secondary small mt-4 mb-0">
+      Acceso seguro al Programa Municipal de Bienestar Animal
+    </p>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-md navbar-dark navbar-mc">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" routerLink="/publicaciones">
+      <span class="logo"><span class="material-symbols-outlined">favorite</span></span>
+      Mascotas Córdoba
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
+      aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menú">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="menuPrincipal">
+      <ul class="navbar-nav ms-auto align-items-md-center">
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-1" routerLink="/publicaciones" routerLinkActive="active">
+            <span class="material-symbols-outlined">home</span> Publicaciones
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center gap-1" href="#" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false" (click)="$event.preventDefault()">
+            <span class="material-symbols-outlined">account_circle</span> CUIL: {{ cuil() }}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><h6 class="dropdown-header">{{ usuario()?.razonSocial }}</h6></li>
+            <li><span class="dropdown-item-text small text-secondary">{{ usuario()?.nombre }} {{ usuario()?.apellido }}</span></li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <button type="button" class="dropdown-item d-flex align-items-center gap-2" (click)="cerrarSesion()">
+                <span class="material-symbols-outlined">logout</span> Cerrar sesión
+              </button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

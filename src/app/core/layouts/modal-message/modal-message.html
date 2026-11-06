@@ -1,0 +1,13 @@
+<div class="p-3 p-md-4">
+  <div class="d-flex justify-content-between align-items-start mb-2">
+    <h5 class="mb-0 d-flex align-items-center gap-2">
+      <span class="material-symbols-outlined text-danger">error</span>
+      {{ message.title || 'No se pudo completar la operación' }}
+    </h5>
+    <button type="button" class="btn-close" aria-label="Cerrar" (click)="ref.close()"></button>
+  </div>
+  <p class="mb-3 text-secondary">{{ message.text }}</p>
+  <div class="text-end">
+    <button type="button" class="btn btn-mc" (click)="ref.close()">Aceptar</button>
+  </div>
+</div>

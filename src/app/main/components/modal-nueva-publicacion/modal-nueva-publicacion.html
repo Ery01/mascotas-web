@@ -1,0 +1,137 @@
+<div class="modal-header-mc d-flex justify-content-between align-items-center">
+  <h2 class="h5 mb-0 d-flex align-items-center gap-2">
+    <span class="material-symbols-outlined">add_circle</span>
+    Nueva publicación de adopción
+  </h2>
+  <button type="button" class="btn-close btn-close-white" aria-label="Cerrar" (click)="cancelar()"></button>
+</div>
+
+<form [formRoot]="pubForm" novalidate>
+  <mat-dialog-content class="contenido">
+    @if (error()) {
+      <div class="alert alert-danger py-2" role="alert">{{ error() }}</div>
+    }
+
+    <!-- Información de la mascota -->
+    <h3 class="seccion">Información de la mascota</h3>
+
+    <div class="mb-3">
+      <label for="inombre" class="form-label">Nombre <span class="text-danger">*</span></label>
+      <input appAutofocus type="text" id="inombre" class="form-control" placeholder="Ej: Manchita"
+        [formField]="pubForm.nombre" [class.is-invalid]="pubForm.nombre().touched() && pubForm.nombre().invalid()" />
+      @if (pubForm.nombre().touched() && pubForm.nombre().invalid()) {
+        <small class="text-danger">{{ pubForm.nombre().errors()[0]?.message }}</small>
+      }
+    </div>
+
+    <div class="row g-3 mb-3">
+      <div class="col-12 col-md-4">
+        <label for="iespecie" class="form-label">Especie <span class="text-danger">*</span></label>
+        <select id="iespecie" class="form-select" [formField]="pubForm.especie"
+          [class.is-invalid]="pubForm.especie().touched() && pubForm.especie().invalid()">
+          <option value="">Seleccionar...</option>
+          @for (e of especies; track e.nroValorDominio) {
+            <option [value]="e.nroValorDominio">{{ e.nomValorDominio }}</option>
+          }
+        </select>
+        @if (pubForm.especie().touched() && pubForm.especie().invalid()) {
+          <small class="text-danger">{{ pubForm.especie().errors()[0]?.message }}</small>
+        }
+      </div>
+
+      <div class="col-12 col-md-4">
+        <label for="isexo" class="form-label">Sexo <span class="text-danger">*</span></label>
+        <select id="isexo" class="form-select" [formField]="pubForm.sexo"
+          [class.is-invalid]="pubForm.sexo().touched() && pubForm.sexo().invalid()">
+          <option value="">Seleccionar...</option>
+          <option value="M">Macho</option>
+          <option value="H">Hembra</option>
+        </select>
+        @if (pubForm.sexo().touched() && pubForm.sexo().invalid()) {
+          <small class="text-danger">{{ pubForm.sexo().errors()[0]?.message }}</small>
+        }
+      </div>
+
+      <div class="col-12 col-md-4">
+        <label for="iedad" class="form-label">Edad aproximada (años)</label>
+        <input type="text" inputmode="numeric" id="iedad" class="form-control" placeholder="Ej: 2"
+          [formField]="pubForm.edad" [class.is-invalid]="pubForm.edad().touched() && pubForm.edad().invalid()" />
+        @if (pubForm.edad().touched() && pubForm.edad().invalid()) {
+          <small class="text-danger">{{ pubForm.edad().errors()[0]?.message }}</small>
+        }
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-12 col-md-6">
+        <label for="iraza" class="form-label">Raza</label>
+        <input type="text" id="iraza" class="form-control" placeholder="Ej: Mestizo" [formField]="pubForm.raza" />
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Descripción de la publicación -->
+    <h3 class="seccion d-flex align-items-center gap-2">
+      <span class="material-symbols-outlined">description</span> Descripción de la publicación
+    </h3>
+
+    <div class="mb-3">
+      <label for="icaracteristicas" class="form-label">Descripción general <span class="text-danger">*</span></label>
+      <textarea id="icaracteristicas" rows="4" class="form-control"
+        placeholder="Contá cómo es la mascota, su personalidad, comportamiento y características..."
+        [formField]="pubForm.caracteristicas"
+        [class.is-invalid]="pubForm.caracteristicas().touched() && pubForm.caracteristicas().invalid()"></textarea>
+      @if (pubForm.caracteristicas().touched() && pubForm.caracteristicas().invalid()) {
+        <small class="text-danger">{{ pubForm.caracteristicas().errors()[0]?.message }}</small>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label for="icondicion" class="form-label">Condiciones básicas de adopción <span class="text-danger">*</span></label>
+      <textarea id="icondicion" rows="3" class="form-control"
+        placeholder="Ej: Se requiere entrevista previa y compromiso de tenencia responsable."
+        [formField]="pubForm.condicion"
+        [class.is-invalid]="pubForm.condicion().touched() && pubForm.condicion().invalid()"></textarea>
+      @if (pubForm.condicion().touched() && pubForm.condicion().invalid()) {
+        <small class="text-danger">{{ pubForm.condicion().errors()[0]?.message }}</small>
+      }
+    </div>
+
+    <hr />
+
+    <!-- Fotografía -->
+    <h3 class="seccion d-flex align-items-center gap-2">
+      <span class="material-symbols-outlined">photo_camera</span> Fotografía
+    </h3>
+
+    <div class="mb-2">
+      <label for="ifoto" class="form-label">Imagen de la mascota <span class="text-danger">*</span></label>
+      <input type="file" id="ifoto" class="form-control" accept="image/jpeg,image/png,image/webp"
+        [class.is-invalid]="errorFoto() || (pubForm.foto().touched() && pubForm.foto().invalid())"
+        (change)="seleccionarFoto($event)" />
+      <small class="text-secondary d-block">La fotografía ayuda a facilitar el proceso de adopción.</small>
+      @if (errorFoto()) {
+        <small class="text-danger">{{ errorFoto() }}</small>
+      }
+      @else if (pubForm.foto().touched() && pubForm.foto().invalid()) {
+        <small class="text-danger">{{ pubForm.foto().errors()[0]?.message }}</small>
+      }
+    </div>
+
+    @if (procesandoFoto()) {
+      <div class="text-secondary small">Procesando imagen...</div>
+    }
+    @if (vistaPrevia(); as src) {
+      <img [src]="src" class="vista-previa rounded border" alt="Vista previa de la foto" />
+    }
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="acciones">
+    <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+    <button type="submit" class="btn btn-mc d-flex align-items-center gap-1"
+      [disabled]="pubForm().submitting() || procesandoFoto()">
+      <span class="material-symbols-outlined">check</span> Publicar mascota
+    </button>
+  </mat-dialog-actions>
+</form>
